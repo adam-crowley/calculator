@@ -41,25 +41,26 @@
 	cursor: pointer;
 	padding: 0;
 	border: 0;
+	font-family: Helvetica, sans-serif;
+	font-size: 2rem;
+}
+.calculator__button--width-third {
+	width: calc(33.333333% - 1px);
+}
+.calculator__button--width-full {
+	width: 100%;
 }
 .calculator__button::after {
 	content: "";
 	display: block;
 	padding-bottom: 100%;
 }
-.calculator__button-character {
-	font-family: Helvetica, sans-serif;
-	font-size: 2rem;
-}
 .calculator__button--number {
-	width: calc(33.333333% - 1px);
 	background-color: lightgrey;
 }
-.calculator__button--special {
-	width: calc(33.333333% - 1px);
+.calculator__button--color-cobalt {
 	background-color: darkgray;
 }
-.calculator__button--operator {
-	width: 100%;
+.calculator__button--color-orange {
 	background-color: orange;
 }
