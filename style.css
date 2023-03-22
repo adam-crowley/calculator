@@ -55,12 +55,12 @@
 	display: block;
 	padding-bottom: 100%;
 }
-.calculator__button--number {
-	background-color: lightgrey;
-}
 .calculator__button--color-cobalt {
 	background-color: darkgray;
 }
 .calculator__button--color-orange {
 	background-color: orange;
+}
+.calculator__button--color-lightgray {
+	background-color: lightgrey;
 }

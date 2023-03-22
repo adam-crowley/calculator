@@ -1,52 +1,50 @@
 // add
 function add(a,b) {
+	console.log('add');
 	return a + b;
 }
 
 // subtract
 function subtract(a,b) {
+	console.log('subtract');
 	return a - b;
 }
 
 // multiply
 function multiply(a,b) {
+	console.log('times');
 	return a * b;
 }
 
 // divide
 function divide(a,b) {
+	console.log('divide');
 	return a / b;
 }
 
 //take inputs and process
-function operate(lastNo, key, nextNo) {
-	//if nextNo already has value then process
-	if (nextNo != null) {
-		switch(key) {
-			case '+':
-				numberTotal = add(lastNo, nextNo);
-				break;
-			case '-':
-				numberTotal = subtract(lastNo, nextNo);
-				break;
-			case '×':
-				numberTotal = multiply(lastNo, nextNo);
-				break;
-			case '/':
-				numberTotal = divide(lastNo, nextNo);
-				break;
-		}
-		displayNumber(numberTotal);
-		lastNo = nextNo;
-		nextNo = numberTotal;
-	} else {
-		return
+function operate(num1, key, num2) {
+	switch(key) {
+		case '+':
+			result = add(num1, num2);
+			break;
+		case '−':
+			result = subtract(num1, num2);
+			break;
+		case '×':
+			result = multiply(num1, num2);
+			break;
+		case '÷':
+			result = divide(num1, num2);
+			break;
 	}
-	
-	console.log({lastNo});
+	firstNo = result;
+	secondNo = null;
+	displayNumber(result);
+	console.log({firstNo});
 	console.log({operator});
-	console.log({nextNo});
-	console.log({numberTotal});
+	console.log({secondNo});
+	console.log({result});
 }
 
 //display number
@@ -54,55 +52,80 @@ function displayNumber(number) {
 	display.innerText = number;
 }
 
+function clearCalculator() {
+	displayNo = null;
+	firstNo = null;
+	operator = null;
+	secondNo = null;
+	result = 0;
+	firstValue = true;
+	secondValue = false;
+	display.innerText = 0;
+}
+
 function incrementNumber(number) {
-	//add number to display number
-		//if operator doesn't have a value add number to lastNo variable
-		//otherwise add number add number to nextNo variable
-	if (operator === null) {
-		lastNo += number;
-		lastNo = Number(lastNo);
-		displayNumber(lastNo);
+	if (firstValue === true) {
+		if (firstNo === null) { firstNo = '' }
+		firstNo += number;
+		firstNo = Number(firstNo);
+		displayNumber(firstNo);
 	} else {
-		if (nextNo === null) {nextNo = 0}
-		nextNo += number;
-		nextNo = Number(nextNo);
-		displayNumber(nextNo);
+		if (secondNo === null) { secondNo = '' }
+		secondNo += number;
+		secondNo = Number(secondNo);
+		displayNumber(secondNo);
+		secondValue = true;
 	}
+	console.log({firstNo});
+	console.log({operator});
+	console.log({secondNo});
+	console.log({result});
 }
 
 const calculator = document.querySelector('.calculator');
 const display = document.querySelector('.calculator__display-output');
-let lastNo = 0;
+let displayNo = null;
+let firstNo = null;
 let operator = null;
-let nextNo = null;
-let numberTotal = 0;
-console.log({lastNo});
+let secondNo = null;
+let result = 0;
+let firstValue = true;
+let secondValue = false;
+
+console.log({firstNo});
 console.log({operator});
-console.log({nextNo});
+console.log({secondNo});
+console.log({result});
 
 //create event listener for all buttons
 calculator.addEventListener('click', (event) => {
 	if (event.target.classList.contains('calculator__button--number')) {
-		const key = event.target.innerText;
+		let key = event.target.innerText;
 		incrementNumber(key);
-		console.log({lastNo});
-		console.log({operator});
-		console.log({nextNo});
-		console.log({numberTotal});
 	}
 	if (event.target.classList.contains('calculator__button--operator')) {
-		const key = event.target.innerText;
-		operator = key;
-		operate(lastNo, operator, nextNo);
-		console.log({lastNo});
+		let key = event.target.innerText;
+		if (firstValue === true) {
+			operator = key;
+			firstValue = false;
+		}
+		if (secondValue === true) {
+			operate(firstNo, operator, secondNo);
+			operator = key;
+		}
+		console.log({firstNo});
 		console.log({operator});
-		console.log({nextNo});
-		console.log({numberTotal});
+		console.log({secondNo});
+		console.log({result});
+		// operate(firstNo, operator, secondNo);
 	}
 	if (event.target.classList.contains('calculator__button--equal')) {
-		operate(lastNo, operator, nextNo);
+		operate(firstNo, operator, secondNo);
+		// operator = key;
+	}
+	if (event.target.classList.contains('calculator__button--clear')) {
+		clearCalculator();
 	}
 })
-
 
 
